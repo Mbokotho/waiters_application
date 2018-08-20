@@ -13,30 +13,31 @@
 
 <form class="" action="/greetings" method="post">
         <label for="">Please  Enter The Name of Person You Want To Greet</label>
-        <input type="text" name="" value="" placeholder="eg. Lwando" class="Name">
-        <button class="button-primary greetBtn" type="button" name="button" >Greet</button>
-</form>
-        <button class="button-primary resetBtn" type="button" name="button" >Reset</button>
+        <input type="text" name="Name" value="" placeholder="eg. Lwando" class="Name">
+        <button class="button-primary greetBtn" type="submit" name="button" >Greet</button>
 
+        <!-- <button class="button-primary resetBtn" type="button" name="button" >Reset</button> -->
 
     </div>
 </div>
 <label class="">
-  <input type="radio" name="Language" class="LanguageRadio" value="Mandarin">
+  <input type="radio" name="language" class="LanguageRadio" value="Mandarin">
   <span class="label-body">Mandarin</span>
 </label>
 <label class="">
-  <input type="radio" name="Language" class="LanguageRadio" value="English">
+  <input type="radio" name="language" class="LanguageRadio" value="English">
   <span class="label-body" >English</span>
 </label>
 <label class="">
-  <input type="radio" name="Language" class="LanguageRadio" value="IsiXhosa">
+  <input type="radio" name="language" class="LanguageRadio" value="IsiXhosa">
   <span class="label-body" >IsiXhosa</span>
 </label>
+</form>
+
 <div class="">
-    Names Entered : <h1> <span class="counter greetCounter" >0</span></h1>
+    Names Entered : <h1> <span class="counter greetCounter" >{{count}}</span></h1>
       </div>
 
       <div class "">
-        <center><h1 style="color:black;padding-right : 20px;" ><span class="greeting"></span></h1></center>
+        <center><h1 style="color:black;padding-right : 20px;" ><span class="greeting">{{greet}}</span></h1></center>
     </div>
