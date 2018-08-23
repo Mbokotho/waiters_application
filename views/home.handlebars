@@ -2,7 +2,7 @@
   <div class="twelve columns">
 
     <div>
-      <h1 style="color:white;">Greetings</h1>
+    <center>  <h1 style="color:white;">Greetings</h1></center>
     </div>
   </div>
 </div>
@@ -10,29 +10,31 @@
 <div class="row">
   <div class="twelve columns">
 
-    <form class="" action="/greetings" method="post">
+    <center><form class="" action="/greetings" method="post">
       <label for="">Please  Enter The Name of Person You Want To Greet</label>
       <input type="text" name="Name" value="" placeholder="eg. Lwando" class="Name">
-      <button class="button-primary greetBtn" type="submit" name="button">Greet</button>
+        <div>  <button class="button-primary greetBtn" type="submit" name="button">Greet</button></div>
+      <!-- <button class="button-primary greetBtn" type="submit" name="button">Greet</button> -->
       </div>
-
-      <input type="radio" name="language" class="LanguageRadio" value="Mandarin">
+      <center><input type="radio" name="language" class="LanguageRadio" value="Mandarin">
       <span class="label-body">Mandarin</span>
       <input type="radio" name="language" class="LanguageRadio" value="English">
       <span class="label-body">English</span>
       <input type="radio" name="language" class="LanguageRadio" value="IsiXhosa">
       <span class="label-body">IsiXhosa</span>
-    </form>
+  </center>
+  </form></center>
 
-
-  <form class="" action="/reset" method="post">
+  <center><form class="" action="/reset" method="post">
     <button class="button-primary" type="submit" name="button">Reset</button>
-  </form>
+  </form></center>
 
-  <div class="">
-    Names Entered :
-    <h1> <span class="counter greetCounter" >{{count}}</span></h1>
+  <div class="row">
+  <center>   <div class="twelve columns">
+   Names Entered :
+    <h1> <span class="counter greetCounter" >{{count}}</span></h1></center>
   </div>
+</div>
 
   <div class "">
     <center>
