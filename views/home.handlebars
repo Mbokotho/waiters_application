@@ -1,43 +1,46 @@
-  <div class= "row" id="header" >
-      <div class="twelve columns">
+<div class="row" id="header">
+  <div class="twelve columns">
 
-    <div >
+    <div>
       <h1 style="color:white;">Greetings</h1>
     </div>
+  </div>
 </div>
-</div>
 
-    <div class="row">
-      <div class="six columns">
+<div class="row">
+  <div class="twelve columns">
 
-
-<form class="" action="/greetings" method="post">
-        <label for="">Please  Enter The Name of Person You Want To Greet</label>
-        <input type="text" name="Name" value="" placeholder="eg. Lwando" class="Name">
-        <button class="button-primary greetBtn" type="submit" name="button" >Greet</button>
-
-        <!-- <button class="button-primary resetBtn" type="button" name="button" >Reset</button> -->
-
-    </div>
-</div>
-<label class="">
-  <input type="radio" name="language" class="LanguageRadio" value="Mandarin">
-  <span class="label-body">Mandarin</span>
-</label>
-<label class="">
-  <input type="radio" name="language" class="LanguageRadio" value="English">
-  <span class="label-body" >English</span>
-</label>
-<label class="">
-  <input type="radio" name="language" class="LanguageRadio" value="IsiXhosa">
-  <span class="label-body" >IsiXhosa</span>
-</label>
-</form>
-
-<div class="">
-    Names Entered : <h1> <span class="counter greetCounter" >{{count}}</span></h1>
+    <form class="" action="/greetings" method="post">
+      <label for="">Please  Enter The Name of Person You Want To Greet</label>
+      <input type="text" name="Name" value="" placeholder="eg. Lwando" class="Name">
+      <button class="button-primary greetBtn" type="submit" name="button">Greet</button>
       </div>
 
-      <div class "">
-        <center><h1 style="color:black;padding-right : 20px;" ><span class="greeting">{{greet}}</span></h1></center>
+      <input type="radio" name="language" class="LanguageRadio" value="Mandarin">
+      <span class="label-body">Mandarin</span>
+      <input type="radio" name="language" class="LanguageRadio" value="English">
+      <span class="label-body">English</span>
+      <input type="radio" name="language" class="LanguageRadio" value="IsiXhosa">
+      <span class="label-body">IsiXhosa</span>
+    </form>
+
+
+  <form class="" action="/reset" method="post">
+    <button class="button-primary" type="submit" name="button">Reset</button>
+  </form>
+
+  <div class="">
+    Names Entered :
+    <h1> <span class="counter greetCounter" >{{count}}</span></h1>
+  </div>
+
+  <div class "">
+    <center>
+      <h1 style="color:black;padding-right : 20px;"><span class="greeting">{{greet}}</span></h1></center>
+  </div>
+
+  {{#if messages.info}}
+    <div class="entry">
+      <h1> {{messages.info}}</h1>
     </div>
+  {{/if}}

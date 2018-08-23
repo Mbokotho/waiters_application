@@ -31,7 +31,6 @@ return  greeting;
 }
 
  function mygreeting(){
-
   return greeting;
 }
 
@@ -42,10 +41,10 @@ function myCounter() {
 
 function resetFunction() {
 
-  var Names = {};
-  var greeting = "";
-  var Name ="";
-  return Names
+   Names = {};
+   greeting = "";
+   Name ="";
+
 }
 
     return{
