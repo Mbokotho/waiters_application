@@ -15,9 +15,9 @@ var myGreet = function(language,Name){
       }
 
     }
-if (Name === '' || language == "") {
-
-}
+// if (Name === '' || language == "") {
+//
+// }
 
   if ( language === 'IsiXhosa') {
     greeting = "Mholo, " +  Name;

@@ -80,9 +80,18 @@ app.post('/greetings',  async function(req, res) {
   const Name = req.body.Name;
   const language = req.body.language;
 
-  if (Name === '' || language === undefined) {
+  if (Name === '' && language === undefined) {
     req.flash('info', 'Please Enter a Name and Select a Language !')
-  } else {
+  }
+
+  else if (Name === '') {
+    req.flash('info', 'Please Enter a Name ')
+  }
+  else if ( language === undefined ) {
+    req.flash('info', 'Please Select a Languge')
+  }
+
+  else {
 
     await pool.query('insert into Users (username) values ($1)' , [Name]);
     Set.myGreet(language, Name);
