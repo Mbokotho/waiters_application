@@ -7,6 +7,8 @@
   </div>
 </div>
 
+<!-- <a href="/add">Names Greeted</a> -->
+
 <div class="row">
   <div class="twelve columns">
 
@@ -15,6 +17,7 @@
       <input type="text" name="Name" value="" placeholder="eg. Lwando" class="Name">
         <div>  <button class="button-primary greetBtn" type="submit" name="button">Greet</button></div>
       <!-- <button class="button-primary greetBtn" type="submit" name="button">Greet</button> -->
+      <a href="/greeted">Names Greeted</a>
       </div>
       <center><input type="radio" name="language" class="LanguageRadio" value="Mandarin">
       <span class="label-body">Mandarin</span>
@@ -29,8 +32,8 @@
     <button class="button-primary" type="submit" name="button">Reset</button>
   </form></center>
 
-  <div class="row">
-  <center>   <div class="twelve columns">
+  <center> <div class="row">
+    <div class="twelve columns">
    Names Entered :
     <h1> <span class="counter greetCounter" >{{count}}</span></h1></center>
   </div>
@@ -39,10 +42,10 @@
   <div class "">
     <center>
       <h1 style="color:black;padding-right : 20px;"><span class="greeting">{{greet}}</span></h1></center>
-  </div>
 
-  {{#if messages.info}}
-    <div class="entry">
+
+  <center>{{#if messages.info}}
       <h1> {{messages.info}}</h1>
-    </div>
-  {{/if}}
+
+  {{/if}}</center>
+</div>
