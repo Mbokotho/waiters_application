@@ -22,16 +22,16 @@ const Pool = pg.Pool;
 
 let useSSL = false;
 let local = process.env.LOCAL || false;
-if (process.env.DATABASE_URL && !local){
-    useSSL = true;
+if (process.env.DATABASE_URL && !local) {
+  useSSL = true;
 }
 // which db connection to use
 const connectionString = process.env.DATABASE_URL || 'postgresql://coder:pg123@localhost:5432/spMynames';
 
 const pool = new Pool({
-    connectionString,
-    ssl : useSSL
-  });
+  connectionString,
+  ssl: useSSL
+});
 
 
 app.engine('handlebars', exphbs({
@@ -61,11 +61,12 @@ app.use(flash());
 
 
 
-app.get('/', function(req, res) {
+app.get('/', async function(req, res) {
 
-  const greet = Set.mygreeting();
-  const count = Set.myCounter();
+  let greet = Set.mygreeting();
 
+  let count = await pool.query('select count(username) from Users');
+  count = count.rows[0].count;
   res.render('home', {
     greet,
     count
@@ -74,46 +75,81 @@ app.get('/', function(req, res) {
 
 });
 
-app.post('/greetings',  async function(req, res) {
-
+app.post('/greetings', async function(req, res) {
 
   const Name = req.body.Name;
   const language = req.body.language;
 
   if (Name === '' && language === undefined) {
     req.flash('info', 'Please Enter a Name and Select a Language !')
-  }
 
-  else if (Name === '') {
+  } else if (Name === '') {
     req.flash('info', 'Please Enter a Name ')
-  }
-  else if ( language === undefined ) {
+
+  } else if (language === undefined) {
     req.flash('info', 'Please Select a Languge')
+
+  } else {
+
+
+    let person = await pool.query('select * from Users where username =$1', [Name])
+    if (person.rows.length != 0) {
+      let currentCount = await pool.query('select greeted_count from Users where username = $1', [Name]);
+      let newCount = currentCount.rows[0].greeted_count + 1;
+      await pool.query('update Users set greeted_count =$1 where username = $2', [newCount, Name]);
+    } else {
+      // await pool.query('insert into Users (username,greeted_count) values ($1,$2)', [Name, 1]);
+
+      await pool.query('insert into Users (username,greeted_count) values ($1,$2)', [Name, 1]);
+      Set.myGreet(language, Name);
+
+    }
   }
-
-  else {
-
-    await pool.query('insert into Users (username) values ($1)' , [Name]);
-    Set.myGreet(language, Name);
-  }
-
-  res.redirect('/');
-
-});
-
-
-app.get('/greeted', async function (req, res) {
-
-    let results = await pool.query('select * from  Users');
-    let names = results.rows;
-    res.render('greeted', { names });
-});
-
-
-app.post('/reset', function(req, res) {
-  Set.resetFunction();
   res.redirect('/');
 });
+
+
+app.get('/greeted', async function(req, res) {
+  let results = await pool.query('select * from  Users');
+  let names = results.rows;
+  res.render('greeted', {
+    names
+  });
+});
+
+
+app.post('/reset', async function(req, res) {
+  // Set.resetFunction();
+  await pool.query('delete  from  Users');
+
+  res.redirect('/');
+});
+
+
+//
+// app.get('/counter/:username', async function(req, res) {
+//   let username = req.params.Name;
+//
+//   let person = await pool.query('select * from Users where username =$1' ,[username])
+//   if (person.rows.length!=0) {
+//     let currentCount = await pool.query('select greeted_count from Users where username =$1', [username]);
+//     let newCount = currentCount.rows[0].greeted_count +1;
+//     await pool.query('update Users set greeted_count =$1 where username = $2', [newCount,username]);
+//   }
+//   else{
+//     await pool.query('insert into Users (username,greeted_count) values ($1,$2)', [username, 1]);
+//   }
+//
+//   count = count.rows[0];
+//   console.log(count);
+//   let times = `Hello,${username} has been greeted ${count} times`;
+//
+//   res.render('names', {
+//     times
+//   });
+// });
+
+
 
 let PORT = process.env.PORT || 3002;
 
