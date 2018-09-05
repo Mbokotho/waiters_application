@@ -79,7 +79,8 @@ app.post('/greetings', async function(req, res) {
 
   const Name = req.body.Name;
   const language = req.body.language;
-   Set.myGreet(language, Name);
+  let Person = Name.toUpperCase();
+   Set.myGreet(language, Person);
   if (Name === '' && language === undefined) {
     req.flash('info', 'Please Enter a Name and Select a Language !')
 
@@ -92,18 +93,18 @@ app.post('/greetings', async function(req, res) {
   } else {
 
 
-    let person = await pool.query('select * from Users where username =$1', [Name])
+    let person = await pool.query('select * from Users where username =$1', [Person])
     if (person.rows.length != 0) {
-      let currentCount = await pool.query('select greeted_count from Users where username = $1', [Name]);
+      let currentCount = await pool.query('select greeted_count from Users where username = $1', [Person]);
 
       let newCount = currentCount.rows[0].greeted_count + 1;
 
-      await pool.query('update Users set greeted_count =$1 where username = $2', [newCount, Name]);
+      await pool.query('update Users set greeted_count =$1 where username = $2', [newCount, Person]);
     }
      else {
-      // await pool.query('insert into Users (username,greeted_count) values ($1,$2)', [Name, 1]);
+      // await pool.query('insert into Users (username,greeted_count) values ($1,$2)', [Person, 1]);
 
-      await pool.query('insert into Users (username,greeted_count) values ($1,$2)', [Name, 1]);
+      await pool.query('insert into Users (username,greeted_count) values ($1,$2)', [Person, 1]);
 
 
     }
