@@ -269,4 +269,6 @@ Route name | Action |Description
 
 ### Deploy the Heroku
 
-Deploy your application to [Heroku](https://www.heroku.com/nodejs).
+https://travis-ci.org/Mbokotho/greeting-webapp.svg?branch=masterDeploy your application to [Heroku]
+(https://www.heroku.com/nodejs).
+
