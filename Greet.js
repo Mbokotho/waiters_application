@@ -1,4 +1,4 @@
- module.exports =function Greeting(){
+ module.exports =function (){
   var Names = {};
   var greeting = "";
   var Name ="";
