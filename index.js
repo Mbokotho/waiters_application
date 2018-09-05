@@ -95,9 +95,12 @@ app.post('/greetings', async function(req, res) {
     let person = await pool.query('select * from Users where username =$1', [Name])
     if (person.rows.length != 0) {
       let currentCount = await pool.query('select greeted_count from Users where username = $1', [Name]);
+
       let newCount = currentCount.rows[0].greeted_count + 1;
+
       await pool.query('update Users set greeted_count =$1 where username = $2', [newCount, Name]);
-    } else {
+    }
+     else {
       // await pool.query('insert into Users (username,greeted_count) values ($1,$2)', [Name, 1]);
 
       await pool.query('insert into Users (username,greeted_count) values ($1,$2)', [Name, 1]);
@@ -126,28 +129,20 @@ app.post('/reset', async function(req, res) {
 });
 
 
-//
-// app.get('/counter/:username', async function(req, res) {
-//   let username = req.params.Name;
-//
-//   let person = await pool.query('select * from Users where username =$1' ,[username])
-//   if (person.rows.length!=0) {
-//     let currentCount = await pool.query('select greeted_count from Users where username =$1', [username]);
-//     let newCount = currentCount.rows[0].greeted_count +1;
-//     await pool.query('update Users set greeted_count =$1 where username = $2', [newCount,username]);
-//   }
-//   else{
-//     await pool.query('insert into Users (username,greeted_count) values ($1,$2)', [username, 1]);
-//   }
-//
-//   count = count.rows[0];
-//   console.log(count);
-//   let times = `Hello,${username} has been greeted ${count} times`;
-//
-//   res.render('names', {
-//     times
-//   });
-// });
+
+app.get('/counter/:username', async function(req, res) {
+  try{
+  let username = req.params.username;
+  let results = await pool.query( ' select * from Users where username = $1', [username]);
+
+  res.render('names', {
+    times: results.rows
+      });
+  } catch(err){
+    res.send(err.stack)
+  }
+
+});
 
 
 
