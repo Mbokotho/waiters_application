@@ -130,6 +130,17 @@ app.post('/reset', async function(req, res) {
   res.redirect('/');
 });
 
+app.post('/clear', async function(req, res) {
+  await pool.query('delete  from  Users');
+  res.render('greeted');
+});
+app.post('/back', async function(req, res) {
+  res.redirect('/');
+});
+app.post('/home', async function(req, res) {
+  res.redirect('greeted');
+});
+
 
 
 app.get('/counter/:username', async function(req, res) {
