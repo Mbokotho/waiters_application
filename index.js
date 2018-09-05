@@ -63,7 +63,7 @@ app.use(flash());
 
 app.get('/', async function(req, res) {
 
-  let greet = Set.mygreeting();
+  let greet = Set.mygreeting()
 
   let count = await pool.query('select count(username) from Users');
   count = count.rows[0].count;
@@ -79,7 +79,7 @@ app.post('/greetings', async function(req, res) {
 
   const Name = req.body.Name;
   const language = req.body.language;
-
+   Set.myGreet(language, Name);
   if (Name === '' && language === undefined) {
     req.flash('info', 'Please Enter a Name and Select a Language !')
 
@@ -104,10 +104,11 @@ app.post('/greetings', async function(req, res) {
       // await pool.query('insert into Users (username,greeted_count) values ($1,$2)', [Name, 1]);
 
       await pool.query('insert into Users (username,greeted_count) values ($1,$2)', [Name, 1]);
-      Set.myGreet(language, Name);
+
 
     }
   }
+
   res.redirect('/');
 });
 
@@ -122,7 +123,7 @@ app.get('/greeted', async function(req, res) {
 
 
 app.post('/reset', async function(req, res) {
-  // Set.resetFunction();
+  Set.resetFunction();
   await pool.query('delete  from  Users');
 
   res.redirect('/');
