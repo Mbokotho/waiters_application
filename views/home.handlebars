@@ -7,39 +7,35 @@
   </div>
 </div>
 
-<!-- <a href="/add">Names Greeted</a> -->
-
-<div class="row">
+<center><div class="row">
   <div class="twelve columns">
-
-    <center><form class="" action="/greetings" method="post">
-      <label for="">Please  Enter The Name of Person You Want To Greet</label>
+    <form class="" action="/greetings" method="post">
       <input type="text" name="Name" value="" placeholder="eg. Lwando" class="Name">
-      <center><label for="">Please  Select the Languge you want to be greeted in</label></center>
-      <center><input type="radio" name="language" class="LanguageRadio" value="Mandarin">
-      <span class="label-body">Mandarin</span>
-      <input type="radio" name="language" class="LanguageRadio" value="English">
-      <span class="label-body">English</span>
-      <input type="radio" name="language" class="LanguageRadio" value="IsiXhosa">
-      <span class="label-body">IsiXhosa</span>
-  </center>
-        <div>  <button class="button-primary greetBtn" type="submit" name="button">Greet</button></div>
-      <!-- <button class="button-primary greetBtn" type="submit" name="button">Greet</button> -->
-    <button>  <a href="/greeted">Names Greeted</a></button>
-      </div>
-
-  </form></center>
-
-  <center><form class="" action="/reset" method="post">
-    <button class="button-primary" type="submit" name="button">Reset</button>
-  </form></center>
-
-  <center> <div class="row">
-    <div class="twelve columns">
-   Names Entered :
-    <h1> <span class="counter greetCounter" >{{count}}</span></h1></center>
+      Users greeted:
+      <span class="counter greetCounter" style="font-size:30px;">{{count}}</span>
   </div>
+  <div class="twelve columns">
+      <input type="radio" name="language" class="LanguageRadio" value="Goie dag">
+      <span class="label-body">Afrikaans</span>
+      <input type="radio" name="language" class="LanguageRadio" value="Hello">
+      <span class="label-body">English</span>
+      <input type="radio" name="language" class="LanguageRadio" value="Molo">
+      <span class="label-body">IsiXhosa</span>
+    </div>
+  </div>
+<div class="row">
+  <div class ="six columns">
+
+  <button class="button-primary greetBtn" type="submit" name="button">Greet</button>
+  </form>
 </div>
+<div class="six columns">
+  <span><form class="" action="/reset" method="post">
+    <button class="button-primary" type="submit" name="button">Reset</button>
+  </form></span>
+</div>
+</div>
+  <button>  <a href="/greeted">Names Greeted</a></button></center>
 
   <div class "">
     <center>

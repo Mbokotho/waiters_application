@@ -1,11 +1,17 @@
 
 <h2>Names Greeted</h2>
-<span><form class="" action="/clear" method="post">
-  <button class="button-primary" type="submit" name="button">Reset</button>
-</form></span>
-<span><form class="" action="/back" method="post">
+
+
+<div class="row">
+<form class="" action="/clear" method="post" style="float: right;">
+      <button class="button-primary" type="submit" name="button"> Clear</button>
+</form>
+<form class="" action="/back" method="post" style="float: left;">
   <button class="button-primary" type="submit" name="button">Back</button>
-</form></span>
+</form>
+</div>
+
+<div class= "row">
 
 <table>
     <tr>
@@ -18,3 +24,4 @@
     </tr>
     {{/each}}
 </table>
+</div>
