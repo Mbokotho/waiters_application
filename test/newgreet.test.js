@@ -28,7 +28,7 @@ let greetService = require('../services/greeting');
 
 
 
- it('Return number of all user in database', async function(){
+ it('Should return number of all user in database', async function(){
 
    let getGreet =  greetService(pool);
   await getGreet.greeter('Lwando','Hello');
@@ -39,9 +39,10 @@ let greetService = require('../services/greeting');
    assert.equal( Greetedusers.length, 3);
 });
 
-it('Return number of times a user has been greeted', async function(){
+it('Should return number of times  a given user has been greeted', async function(){
 
-  let getGreet =  greetService(pool);
+let getGreet =  greetService(pool);
+
 await getGreet.greeter('Lwando','Hello');
 await getGreet.greeter('Lwando','Hello');
 await getGreet.greeter('Lwando','Hello');
@@ -50,10 +51,43 @@ await getGreet.greeter('Luko','Hello');
 
   let userRow = await getGreet.readUser('Lwando');
 
-  // let upDated = readCount();
-
   assert.equal( userRow[0].greeted_count, 4);
 });
+
+it('Should greet a name in English', async function(){
+
+let getGreet =  greetService(pool);
+let greeting = await getGreet.greeter('Lwando','Hello')
+
+  assert.equal( greeting,'Hello, Lwando' );
+});
+
+
+it('Should greet a name in Afrikaans', async function(){
+
+let getGreet =  greetService(pool);
+let greeting = await getGreet.greeter('Lwando','Goeie dag')
+
+  assert.equal( greeting,'Goeie dag, Lwando' );
+});
+it('Should greet a name in isiXhosa', async function(){
+
+let getGreet =  greetService(pool);
+let greeting = await getGreet.greeter('Lwando','Molo')
+
+  assert.equal( greeting,'Molo, Lwando' );
+});
+it('Should not count the same name twice', async function(){
+  let getGreet =  greetService(pool);
+  await getGreet.greeter('Lwando','Hello');
+  await getGreet.greeter('Lwando','Hello');
+  await getGreet.greeter('Lwando','Hello');
+  await getGreet.greeter('Lwando','Hello');
+  let count = await getGreet.allCount()
+
+  assert.equal( count,1 );
+});
+
 
 after(function(){
   pool.end();

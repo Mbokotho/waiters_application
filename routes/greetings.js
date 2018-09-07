@@ -18,6 +18,7 @@ async function greetings(req, res) {
   try{
     const Name = req.body.Name;
     const language = req.body.language;
+
     let Person = Name.toUpperCase();
 
     if (Name === '' && language === undefined) {
@@ -29,7 +30,7 @@ async function greetings(req, res) {
     } else if (language === undefined) {
       req.flash('info', 'Please Select a Languge')
 
-    } else {
+    } else if(isNaN(Person)){
       await getGreet.greeter(Person,language);
      req.flash('info', language + ", " + Person );
 

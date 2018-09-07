@@ -29,7 +29,6 @@ async function readCount(Person) {
 }
 
 async function greeter(Person,language) {
-
 let user = await readUser(Person);
       if (user.length != 0) {
 
@@ -40,7 +39,7 @@ let user = await readUser(Person);
        else {
         await putData(Person,language)
       }
-
+return language + ", " + Person
 }
 
 async function reset() {
