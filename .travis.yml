@@ -1,9 +1,17 @@
+
 language: node_js
+
+env:
+     - DB=postgresql://postgres@localhost:5432/greetings_test
+
 node_js:
-  - "v8.0.0"
-services:
-  - postgresql
-  before_script:
-  - psql -c 'create database travis_ci_test;' -U postgres
+   - "8.9.4"
+
 before_script:
-  - cp config/database.yml.travis config/database.yml
+  - psql -c 'create database greetings_test;' -U postgres
+  - psql -U postgres -d shoe_test -a -f table.sql
+
+addons:
+    apt:
+    packages:
+    - postgresql-server-dev-9.2
