@@ -50,39 +50,40 @@ app.use(bodyParser.urlencoded({
   extended: false
 }));
 app.use(bodyParser.json());
-app.use(express.static('public'));
+app.use(express.static("public"));
 
-
-app.use(session({
+app.use(
+  session({
   secret: "<add a secret string here>",
   resave: false,
   saveUninitialized: true
-}));
+  })
+);
 
 app.use(flash());
 
+let getGreet = greetRoutes(pool);
 
-let getGreet =  greetRoutes(pool);
+app.get("/", getGreet.home);
+app.post("/greetings", getGreet.greetings);
+app.get("/greeted", getGreet.greeted);
+app.post("/reset", getGreet.Reset);
+app.get("/counter/:username", getGreet.counter);
 
-app.get('/', getGreet.home);
-app.post('/greetings', getGreet.greetings);
-app.get('/greeted', getGreet.greeted);
-app.post('/reset', getGreet.Reset);
-app.get('/counter/:username',getGreet.counter);
-
-app.post('/clear', async function(req, res) {
-  await pool.query('delete  from  Users');
-  res.render('greeted');
+app.post("/clear", async function(req, res) {
+  await pool.query("delete  from  Users");
+  res.render("greeted");
 });
-app.post('/back', async function(req, res) {
-  res.redirect('/');
+app.post("/back", async function(req, res) {
+  res.redirect("/");
 });
-app.post('/home', async function(req, res) {
-  res.redirect('greeted');
+
+app.post("/home", async function(req, res) {
+  res.redirect("greeted");
 });
 
 let PORT = process.env.PORT || 3002;
 
 app.listen(PORT, function() {
-  console.log('App starting on port', PORT);
+  console.log("App starting on port", PORT);
 });
