@@ -29,7 +29,7 @@ describe('Greeting widget', function () {
         await getGreet.greeter('Kong', 'Hello');
         let Greetedusers = await getGreet.readData();
 
-        assert.strict.equal(Greetedusers.length, 3);
+        assert.strictEqual(Greetedusers.length, 3);
     });
 
     it('Should return number of times  a given user has been greeted', async function () {
@@ -43,27 +43,27 @@ describe('Greeting widget', function () {
 
         let userRow = await getGreet.readUser('Lwando');
 
-        assert.strict.equal(userRow[0].greeted_count, 4);
+        assert.strictEqual(userRow[0].greeted_count, 4);
     });
 
     it('Should greet a name in English', async function () {
         let getGreet = greetService(pool);
         let greeting = await getGreet.greeter('Lwando', 'Hello');
 
-        assert.strict.equal(greeting, 'Hello, Lwando');
+        assert.strictEqual(greeting, 'Hello, Lwando');
     });
 
     it('Should greet a name in Afrikaans', async function () {
         let getGreet = greetService(pool);
         let greeting = await getGreet.greeter('Lwando', 'Goeie dag');
 
-        assert.strict.equal(greeting, 'Goeie dag, Lwando');
+        assert.strictEqual(greeting, 'Goeie dag, Lwando');
     });
     it('Should greet a name in isiXhosa', async function () {
         let getGreet = greetService(pool);
         let greeting = await getGreet.greeter('Lwando', 'Molo');
 
-        assert.strict.equal(greeting, 'Molo, Lwando');
+        assert.strictEqual(greeting, 'Molo, Lwando');
     });
     it('Should not count the same name twice', async function () {
         let getGreet = greetService(pool);
@@ -73,7 +73,7 @@ describe('Greeting widget', function () {
         await getGreet.greeter('Lwando', 'Hello');
         let count = await getGreet.allCount();
 
-        assert.strict.equal(count, 1);
+        assert.strictEqual(count, 1);
     });
 
     after(function () {
