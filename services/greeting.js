@@ -1,8 +1,10 @@
 module.exports = function (pool) {
+
     async function readData () {
         let result = await pool.query('select * from Users');
         return result.rows;
     }
+    
     async function putData (username, language) {
         await pool.query('insert into Users (username,greeted_count,language) values ($1,$2,$3)', [username, 1, language]);
     }
@@ -28,7 +30,7 @@ module.exports = function (pool) {
     async function greeter (Person, language) {
         let user = await readUser(Person);
         if (user.length !== 0) {
-            let newCount = user[0].greeted_count + 1; // await readCout(Person);
+            let newCount = user[0].greeted_count + 1;
 
             await upData(Person, newCount, language);
         } else {

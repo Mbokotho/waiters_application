@@ -46,10 +46,13 @@ module.exports = function (pool) {
     async function counter (req, res) {
         try {
             let username = req.params.username;
+            
             let results = await getGreet.readUser(username);
+
             res.render('names', { times: results });
         } catch (err) {
             res.send(err.stack);
+
         }
     }
 

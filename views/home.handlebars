@@ -2,47 +2,39 @@
   <div class="twelve columns">
 
     <div>
-    <center>  <h1 style="color:white;">Greetings</h1></center>
+    <center>  <h1 style="color:white;">W8tas</h1></center>
     </div>
   </div>
 </div>
 
 <center><div class="row">
   <div class="twelve columns">
-    <form class="" action="/greetings" method="post">
-      <input type ="text" name="Name" value="" placeholder="eg. Lwando" class="Name">
-      Users greeted:
-      <span class="counter greetCounter" style="font-size:30px;">{{count}}</span>
+    <h2><i>Enter your name and select your shifts</i></h2>
+    <form class="" action="/waiter/{{username}}" method="post">
+      <input type ="text" name="Name" value="" placeholder="eg. Lwando" class="effect-16">
+{{!-- 
+      <div class="mahi_holder">
+    <div class="container">
+      <div class="row bg_1">
+        
+        <div class="col-3">
+            <input class="effect-1" type="text" placeholder="Placeholder Text"> 
+            </div>
+            --}}
+      {{!-- Users greeted:
+      <span class="counter greetCounter" style="font-size:30px;">{{count}}</span> --}}
   </div>
   <div class="twelve columns">
-      <input type="radio" name="language" class="LanguageRadio" value="Goeie dag">
-      <span class="label-body">Afrikaans</span>
-      <input type="radio" name="language" class="LanguageRadio" value="Hello">
-      <span class="label-body">English</span>
-      <input type="radio" name="language" class="LanguageRadio" value="Molo">
-      <span class="label-body">IsiXhosa</span>
+<p>Which days would you like to work on ?</p>
+<input type="checkbox" name="fruit" value="Monday"> Monday
+<input type="checkbox" name="fruit" value="Tuesday"> Tuesday 
+<input type="checkbox" name="fruit" value="Wednesday"> Wednesday 
+<input type="checkbox" name="fruit" value="Monday"> Thursday
+<input type="checkbox" name="fruit" value="Tuesday"> Friday 
+<input type="checkbox" name="fruit" value="Wednesday"> Sasturday
+<input type="checkbox" name="fruit" value="Wednesday"> Sunday
+<p><button class="button" type="submit" name="button">Submit</button></p>
+</form>
     </div>
   </div>
-<div class="row">
-  <div class ="six columns">
 
-  <button class="button-primary greetBtn" type="submit" name="button">Greet</button>
-  </form>
-</div>
-<div class="six columns">
-  <span><form class="" action="/reset" method="post">
-    <button class="button-primary" type="submit" name="button">Reset</button>
-  </form></span>
-</div>
-</div>
-  <button>  <a href="/greeted">Names Greeted</a></button></center>
-
-  <div class "">
-    <center>
-      <h1 style="color:black;padding-right : 20px;"><span class="greeting">{{greet}}</span></h1></center>
-</div>
-
-  <center>{{#if messages.info}}
-      <h1> {{messages.info}}</h1>
-
-  {{/if}}</center>

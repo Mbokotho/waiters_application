@@ -1,5 +1,5 @@
 {
-  "name": "Greetings",
+  "name": "waiters",
   "version": "1.0.0",
   "description": "In this document we will explore how to create web applications with [ExpressJS].",
   "main": "index.js",
