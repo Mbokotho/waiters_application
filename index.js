@@ -12,7 +12,6 @@ const flash = require('express-flash');
 
 const session = require('express-session');
 
-
 const pg = require('pg');
 
 const Pool = pg.Pool;
@@ -25,7 +24,7 @@ if (process.env.DATABASE_URL && !local) {
 // which db connection to use
 const connectionString =
   process.env.DATABASE_URL ||
-  'postgresql://coder:pg123@localhost:5432/my_waiters';
+  'postgresql://coder:pg123@localhost:5432/waiters';
 
 const pool = new Pool({
     connectionString,
@@ -64,8 +63,38 @@ app.use(
 app.use(flash());
 
 app.get('/', async function (req, res) {
-
     res.render('home');
+});
+
+app.post('/waiters/:username', async function (req, res) {
+
+    const user = req.body.Name;
+    console.log(user);
+    // const person = username.toUpperCase();
+
+    let result = await pool.query('select * from waiters where username = $1', [user]);
+
+    if (result.rowCount === 0) {
+        await pool.query('insert into waiters (username) values ($1)', [user]);
+
+    }
+    req.flash('info', `${user} you are now on duty please click the button bellow to select your working days`);
+
+    // if (result.rowCount === 1) {
+    //     let waiterId = await pool.query('select id from waiters where username = $1', [person]);
+
+    //     let dayId = await pool.query('SELECT id FROM shifts WHERE shift_day=$1', [workingday]);
+
+    //     result = await pool.query('INSERT INTO roster (waiter_id ,shift_id) VALUES ($1, $2)', [waiterId.rows[0].id, dayId.rows[0].id]);
+    // }
+
+    res.redirect('/');
+});
+
+app.get('/waiters/:username', async function (req, res) {
+    const user = req.params.username;
+    console.log(user);
+    res.render('days');
 });
 
 let PORT = process.env.PORT || 3030;

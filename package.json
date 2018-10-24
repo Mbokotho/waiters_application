@@ -27,13 +27,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Mbokotho/waiters_webapp.git"
+    "url": "git+https://github.com/Mbokotho/waiters.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Mbokotho/waiters_webapp.git"
+    "url": "https://github.com/Mbokotho/waiters.git"
   },
-  "homepage": "https://github.com/Mbokotho/waiters_webapp.git"
+  "homepage": "https://github.com/Mbokotho/waiters.git"
 }
