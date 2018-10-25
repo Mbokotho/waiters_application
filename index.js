@@ -63,38 +63,45 @@ app.use(
 app.use(flash());
 
 app.get('/', async function (req, res) {
-    res.render('home');
+    res.render('days');
+});
+
+app.get('/waiters/:username', async function (req, res) {
+    const user = req.params.username;
+    // if (user !== '' && isNaN(user)) {
+    //     let result = await pool.query('select * from waiters where username = $1', [user]);
+    //     if (result.rowCount === 0) {
+    //         await pool.query('insert into waiters (username) values ($1)', [user]);
+    //     }
+    //     req.flash('info', `${user} you are now on duty please click the button bellow to select your working days`);
+    // }
+
+    console.log(user);
+    res.render('days',{username:user});
 });
 
 app.post('/waiters/:username', async function (req, res) {
-
-    const user = req.body.Name;
+    const user = req.params.username;
+    const workingday = req.body.day;
     console.log(user);
     // const person = username.toUpperCase();
 
-    let result = await pool.query('select * from waiters where username = $1', [user]);
+    // let result = await pool.query('select * from waiters where username = $1', [user]);
 
-    if (result.rowCount === 0) {
-        await pool.query('insert into waiters (username) values ($1)', [user]);
-
-    }
-    req.flash('info', `${user} you are now on duty please click the button bellow to select your working days`);
+    // if (result.rowCount === 0) {
+    //     await pool.query('insert into waiters (username) values ($1)', [user]);
+    // }
+    // req.flash('info', `${user} you are now on duty please click the button bellow to select your working days`);
 
     // if (result.rowCount === 1) {
-    //     let waiterId = await pool.query('select id from waiters where username = $1', [person]);
+    //     let waiterId = await pool.query('select id from waiters where username = $1', [user]);
 
     //     let dayId = await pool.query('SELECT id FROM shifts WHERE shift_day=$1', [workingday]);
 
     //     result = await pool.query('INSERT INTO roster (waiter_id ,shift_id) VALUES ($1, $2)', [waiterId.rows[0].id, dayId.rows[0].id]);
     // }
 
-    res.redirect('/');
-});
-
-app.get('/waiters/:username', async function (req, res) {
-    const user = req.params.username;
-    console.log(user);
-    res.render('days');
+    res.redirect('/waiters/'+user);
 });
 
 let PORT = process.env.PORT || 3030;
