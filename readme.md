@@ -268,7 +268,3 @@ Route name | Action |Description
 `/actions/:type`  | GET  | display all the `sms` or `call` actions - display the timestamps using [fromNow](https://momentjs.com/docs/#/displaying/fromnow/) and display a total cost for the selected action.
 
 ### Deploy the Heroku
-
-https://travis-ci.org/Mbokotho/greeting-webapp.svg?branch=masterDeploy your application to [Heroku]
-(https://www.heroku.com/nodejs).
-
