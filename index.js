@@ -69,39 +69,42 @@ app.get('/', async function (req, res) {
 app.get('/waiters/:username', async function (req, res) {
     const user = req.params.username;
     // if (user !== '' && isNaN(user)) {
-    //     let result = await pool.query('select * from waiters where username = $1', [user]);
-    //     if (result.rowCount === 0) {
-    //         await pool.query('insert into waiters (username) values ($1)', [user]);
-    //     }
-    //     req.flash('info', `${user} you are now on duty please click the button bellow to select your working days`);
+    let result = await pool.query('select * from waiters where username = $1', [user]);
+    if (result.rowCount === 0) {
+        await pool.query('insert into waiters (username) values ($1)', [user]);
+    }
+    req.flash('info', `${user} you are now on duty please click the button bellow to select your working days`);
     // }
 
-    console.log(user);
-    res.render('days',{username:user});
+    // console.log(user);
+    res.render('days', { username: user
+    });
 });
 
 app.post('/waiters/:username', async function (req, res) {
     const user = req.params.username;
-    const workingday = req.body.day;
-    console.log(user);
-    // const person = username.toUpperCase();
+    const workingDay = req.body.day;
 
-    // let result = await pool.query('select * from waiters where username = $1', [user]);
+    console.log(workingDay);
 
-    // if (result.rowCount === 0) {
-    //     await pool.query('insert into waiters (username) values ($1)', [user]);
-    // }
-    // req.flash('info', `${user} you are now on duty please click the button bellow to select your working days`);
+    let person = user.toUpperCase();
 
-    // if (result.rowCount === 1) {
-    //     let waiterId = await pool.query('select id from waiters where username = $1', [user]);
+    let result = await pool.query('select * from waiters where username = $1', [person]);
 
-    //     let dayId = await pool.query('SELECT id FROM shifts WHERE shift_day=$1', [workingday]);
+    if (result.rowCount === 0) {
+        await pool.query('insert into waiters (username) values ($1)', [person]);
+        let waiterId = await pool.query('select id from waiters where username = $1', [person]);
 
-    //     result = await pool.query('INSERT INTO roster (waiter_id ,shift_id) VALUES ($1, $2)', [waiterId.rows[0].id, dayId.rows[0].id]);
-    // }
+        for (var j = 0; j < workingDay.length; j++) {
+            console.log(workingDay[j]);
+            let dayId = await pool.query('SELECT id FROM shifts WHERE shift_day=$1', [workingDay[j]]);
+            result = await pool.query('INSERT INTO roster (waiter_id ,shift_id) VALUES ($1, $2)', [waiterId.rows[0].id, dayId.rows[0].id]);
+        }
+    }
 
-    res.redirect('/waiters/'+user);
+    req.flash('info', `${user} you are now on duty please click the button bellow to select your working days`);
+
+    res.redirect('/waiters/' + user);
 });
 
 let PORT = process.env.PORT || 3030;
