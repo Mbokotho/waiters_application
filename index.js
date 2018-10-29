@@ -102,7 +102,7 @@ app.post('/waiters/:username', async function (req, res) {
         }
     }
 
-    req.flash('info', `${user} you are now on duty please click the button bellow to select your working days`);
+    req.flash('info', `${user} you are now on duty please select your working days`);
 
     res.redirect('/waiters/' + user);
 });
