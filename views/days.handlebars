@@ -7,7 +7,12 @@
   </div>
 </div>
 <div class="twelve columns">
-<form class ="" action="/waiters/{{username}}" method="POST"><p>Which days would you like to work on ?</p>
+
+  {{#if messages.info}}
+  <h5 style="color:#4caf50;">{{messages.info}}</h5>
+  {{/if}}
+
+<form class ="" action="/waiters/{{username}}" method="POST"><p>
 <input type="checkbox" name="day" value="Monday"> Monday
 <input type="checkbox" name="day" value="Tuesday"> Tuesday 
 <input type="checkbox" name="day" value="Wednesday"> Wednesday 

@@ -73,10 +73,7 @@ app.get('/waiters/:username', async function (req, res) {
     if (result.rowCount === 0) {
         await pool.query('insert into waiters (username) values ($1)', [user]);
     }
-    req.flash('info', `${user} you are now on duty please click the button bellow to select your working days`);
-    // }
 
-    // console.log(user);
     res.render('days', { username: user
     });
 });
@@ -84,8 +81,6 @@ app.get('/waiters/:username', async function (req, res) {
 app.post('/waiters/:username', async function (req, res) {
     const user = req.params.username;
     const workingDay = req.body.day;
-
-    console.log(workingDay);
 
     let person = user.toUpperCase();
 
@@ -96,13 +91,22 @@ app.post('/waiters/:username', async function (req, res) {
         let waiterId = await pool.query('select id from waiters where username = $1', [person]);
 
         for (var j = 0; j < workingDay.length; j++) {
-            console.log(workingDay[j]);
             let dayId = await pool.query('SELECT id FROM shifts WHERE shift_day=$1', [workingDay[j]]);
             result = await pool.query('INSERT INTO roster (waiter_id ,shift_id) VALUES ($1, $2)', [waiterId.rows[0].id, dayId.rows[0].id]);
         }
-    }
+        let day = await pool.query('select waiter_id from roster where waiter_id =$1', [waiterId.rows[0].id]);
+        console.log(day.rows[0].waiter_id);
 
-    req.flash('info', `${user} you are now on duty please select your working days`);
+    }
+    
+    // waiters=> select* from roster join waiters on waiter_id = waiters.id join shifts on shifts.id = shift_id where  waiter_id=181;
+    //  id  | waiter_id | shift_id | id  | username | id | shift_day
+    // -----+-----------+----------+-----+----------+----+-----------
+    //  138 |       181 |        1 | 181 | MANDLA   |  1 | Monday
+    //  139 |       181 |        3 | 181 | MANDLA   |  3 | Wednesday
+    //  140 |       181 |        4 | 181 | MANDLA   |  4 | Thursday
+    // (3 rows)
+    
 
     res.redirect('/waiters/' + user);
 });
