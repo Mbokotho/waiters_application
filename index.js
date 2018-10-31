@@ -68,7 +68,6 @@ app.get('/', async function (req, res) {
 
 app.get('/waiters/:username', async function (req, res) {
     const user = req.params.username;
-    // if (user !== '' && isNaN(user)) {
     let result = await pool.query('select * from waiters where username = $1', [user]);
     if (result.rowCount === 0) {
         await pool.query('insert into waiters (username) values ($1)', [user]);
@@ -93,24 +92,25 @@ app.post('/waiters/:username', async function (req, res) {
         for (var j = 0; j < workingDay.length; j++) {
             let dayId = await pool.query('SELECT id FROM shifts WHERE shift_day=$1', [workingDay[j]]);
             result = await pool.query('INSERT INTO roster (waiter_id ,shift_id) VALUES ($1, $2)', [waiterId.rows[0].id, dayId.rows[0].id]);
+            let day = await pool.query('select waiter_id from roster where waiter_id =$1', [waiterId.rows[0].id]);
+            console.log(day.rows[0].waiter_id);
+            let onDuty = await pool.query(' select* from roster join waiters on waiter_id = waiters.id join shifts on shifts.id = shift_id where  waiter_id=$1', [waiterId.rows[0].id]);
+            console.log(onDuty);
         }
-        let day = await pool.query('select waiter_id from roster where waiter_id =$1', [waiterId.rows[0].id]);
-        console.log(day.rows[0].waiter_id);
-
     }
-    
-    // waiters=> select* from roster join waiters on waiter_id = waiters.id join shifts on shifts.id = shift_id where  waiter_id=181;
-    //  id  | waiter_id | shift_id | id  | username | id | shift_day
-    // -----+-----------+----------+-----+----------+----+-----------
-    //  138 |       181 |        1 | 181 | MANDLA   |  1 | Monday
-    //  139 |       181 |        3 | 181 | MANDLA   |  3 | Wednesday
-    //  140 |       181 |        4 | 181 | MANDLA   |  4 | Thursday
-    // (3 rows)
-    
 
     res.redirect('/waiters/' + user);
 });
 
+app.get('/day', async function (req, res) {
+    let name = await pool.query('select * from shifts');
+    let names = name.rows
+    res.render('day', { names });
+});
+
+app.post('/roster', async function (req, res) {
+    res.redirect('day');
+});
 let PORT = process.env.PORT || 3030;
 
 app.listen(PORT, function () {
