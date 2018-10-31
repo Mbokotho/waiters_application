@@ -95,7 +95,10 @@ app.post('/waiters/:username', async function (req, res) {
             let day = await pool.query('select waiter_id from roster where waiter_id =$1', [waiterId.rows[0].id]);
             console.log(day.rows[0].waiter_id);
             let onDuty = await pool.query(' select* from roster join waiters on waiter_id = waiters.id join shifts on shifts.id = shift_id where  waiter_id=$1', [waiterId.rows[0].id]);
-            console.log(onDuty);
+            // console.log(onDuty);
+            if (onDuty.rowCount === 3) {
+                console.log(onDuty.rows);
+            }
         }
     }
 
@@ -104,7 +107,7 @@ app.post('/waiters/:username', async function (req, res) {
 
 app.get('/day', async function (req, res) {
     let name = await pool.query('select * from shifts');
-    let names = name.rows
+    let names = name.rows;
     res.render('day', { names });
 });
 
