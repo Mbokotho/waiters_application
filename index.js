@@ -68,11 +68,7 @@ app.get('/', async function (req, res) {
 
 app.get('/waiters/:username', async function (req, res) {
     const user = req.params.username;
-    let result = await pool.query('select * from waiters where username = $1', [user]);
-    if (result.rowCount === 0) {
-        await pool.query('insert into waiters (username) values ($1)', [user]);
-    }
-
+    await pool.query('insert into waiters (username) values ($1)', [user]);
     res.render('days', { username: user
     });
 });
@@ -80,25 +76,19 @@ app.get('/waiters/:username', async function (req, res) {
 app.post('/waiters/:username', async function (req, res) {
     const user = req.params.username;
     const workingDay = req.body.day;
+    let waiterId = await pool.query('select id from waiters where username = $1', [user]);
 
-    let person = user.toUpperCase();
-
-    let result = await pool.query('select * from waiters where username = $1', [person]);
-
-    if (result.rowCount === 0) {
-        await pool.query('insert into waiters (username) values ($1)', [person]);
-        let waiterId = await pool.query('select id from waiters where username = $1', [person]);
-
+    if (typeof workingDay === 'string') {
+        let dayId = await pool.query('SELECT id FROM shifts WHERE shift_day=$1', [workingDay]);
+        result = await pool.query('INSERT INTO roster (waiter_id ,shift_id) VALUES ($1, $2)', [waiterId.rows[0].id, dayId.rows[0].id]);
+    } else {
         for (var j = 0; j < workingDay.length; j++) {
             let dayId = await pool.query('SELECT id FROM shifts WHERE shift_day=$1', [workingDay[j]]);
             result = await pool.query('INSERT INTO roster (waiter_id ,shift_id) VALUES ($1, $2)', [waiterId.rows[0].id, dayId.rows[0].id]);
             let day = await pool.query('select waiter_id from roster where waiter_id =$1', [waiterId.rows[0].id]);
             console.log(day.rows[0].waiter_id);
             let onDuty = await pool.query(' select* from roster join waiters on waiter_id = waiters.id join shifts on shifts.id = shift_id where  waiter_id=$1', [waiterId.rows[0].id]);
-            // console.log(onDuty);
-            if (onDuty.rowCount === 3) {
-                console.log(onDuty.rows);
-            }
+            console.log(onDuty.rows);
         }
     }
 
