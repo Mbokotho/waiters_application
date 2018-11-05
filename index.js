@@ -11,6 +11,9 @@ const moment = require('moment');
 const flash = require('express-flash');
 
 const session = require('express-session');
+let waiterRoutes = require('./routes/waiter');
+
+
 
 const pg = require('pg');
 
@@ -62,38 +65,15 @@ app.use(
 
 app.use(flash());
 
+let getWaiter = waiterRoutes(pool);
+
 app.get('/', async function (req, res) {
     res.render('days');
 });
 
-app.get('/waiters/:username', async function (req, res) {
-    const user = req.params.username;
-    await pool.query('insert into waiters (username) values ($1)', [user]);
-    res.render('days', { username: user
-    });
-});
+app.get('/waiters/:username', getWaiter.waiter);
 
-app.post('/waiters/:username', async function (req, res) {
-    const user = req.params.username;
-    const workingDay = req.body.day;
-    let waiterId = await pool.query('select id from waiters where username = $1', [user]);
-
-    if (typeof workingDay === 'string') {
-        let dayId = await pool.query('SELECT id FROM shifts WHERE shift_day=$1', [workingDay]);
-        result = await pool.query('INSERT INTO roster (waiter_id ,shift_id) VALUES ($1, $2)', [waiterId.rows[0].id, dayId.rows[0].id]);
-    } else {
-        for (var j = 0; j < workingDay.length; j++) {
-            let dayId = await pool.query('SELECT id FROM shifts WHERE shift_day=$1', [workingDay[j]]);
-            result = await pool.query('INSERT INTO roster (waiter_id ,shift_id) VALUES ($1, $2)', [waiterId.rows[0].id, dayId.rows[0].id]);
-            let day = await pool.query('select waiter_id from roster where waiter_id =$1', [waiterId.rows[0].id]);
-            console.log(day.rows[0].waiter_id);
-            let onDuty = await pool.query(' select* from roster join waiters on waiter_id = waiters.id join shifts on shifts.id = shift_id where  waiter_id=$1', [waiterId.rows[0].id]);
-            console.log(onDuty.rows);
-        }
-    }
-
-    res.redirect('/waiters/' + user);
-});
+app.post('/waiters/:username', getWaiter.secondWaiter);
 
 app.get('/day', async function (req, res) {
     let name = await pool.query('select * from shifts');
