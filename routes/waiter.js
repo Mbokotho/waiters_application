@@ -19,8 +19,11 @@ module.exports = function (pool) {
             const workingDay = req.body.day;
 
             await getWaiter.putInRoster(user, workingDay);
+            
             let onDuty = await getWaiter.readRoster(workingDay);
-            console.log(onDuty);
+            // console.log(onDuty);
+            let duty = await getWaiter.waitersWorking(onDuty);
+            console.log(duty);
 
             res.redirect('/waiters/' + user);
         } catch (err) {

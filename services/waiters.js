@@ -66,6 +66,14 @@ module.exports = function (pool) {
         }
     }
 
+    async function waitersWorking (list) {
+        var Items = [];
+        for (var i = 0; i < list.length; i++) {
+            Items.push(list[i].username);
+        }
+        return Items;
+    }
+
     async function putInRoster (user, workingDay) {
         let waiterId = await pool.query('select id from waiters where username = $1', [user]);
 
@@ -91,7 +99,7 @@ module.exports = function (pool) {
         putWaiter,
         readWaiterId,
         putInRoster,
-        readRoster
-
+        readRoster,
+        waitersWorking
     };
 };
