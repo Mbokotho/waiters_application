@@ -6,15 +6,34 @@
     </div>
   </div>
   </div>
- 
-<div class= "row">
- <h3>DAYS</h3>
-<table>
-    {{#each names}}
-        <tr>
-        <a href="">{{shift_day}}</a>
-    </tr>
-    {{/each}}
-</table>
-</div>
+ {{!-- <form action="/day" method="get">
+ <input type="radio" name="Town" class="with-gap" value="Monday">
+  <span class="label-body">Monday</span>
+   <button class="button" type="submit" name="button">VIEW</button>
+</form> --}}
+  <center><form class ="" action="/day" method="get">
+  <input type="radio" name="myDay" class="with-gap" value="Monday">
+  <span class="label-body">MONDAY</span>
+
+  <input type="radio" name="myDay" class="with-gap" value="Tuesday">
+  <span class="label-body">TUESDAY</span>
+
+  <input type="radio" name="myDay" class="with-gap" value="Wednesday">
+  <span class="label-body">WEDNESDAY</span>
+
+  <input type="radio" name="myDay" class="with-gap" value="Thursday">
+  <span class="label-body">THURSDAY</span>
+<input type="radio" name="myDay" class="with-gap" value="Friday">
+  <span class="label-body">FRIDAY</span>
+
+  <input type="radio" name="myDay" class="with-gap" value="Saturday">
+  <span class="label-body">SATURDAY</span>
+
+  <input type="radio" name="myDay" class="with-gap" value="Sunday">
+  <span class="label-body">SUNDAY</span></center>
+
+  <div class="row  buttons">
+  <center><button class="button" type="submit" name="button">VIEW</button></center>
+</form></center>
+
 

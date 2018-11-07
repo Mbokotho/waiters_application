@@ -16,55 +16,66 @@ module.exports = function (pool) {
         let waiterId = await pool.query('select id from waiters where username = $1', [person]);
         return waiterId.rows[0].id;
     }
-    async function readDay (Day) {
+    // async function readDay (Day) {
+    //     let result = await pool.query('SELECT id FROM shifts WHERE shift_day=$1', [Day]);
+    //     return result.rows[0].id;
+    // }
+
+    async function readRoster (Day) {
         if (Day === 'Monday') {
-            result = await pool.query('SELECT id FROM shifts WHERE shift_day=$1', ['Monday']);
-            let Id = result.rows;
-            await pool.query(' select* from roster join waiters on waiter_id = waiters.id join shifts on shifts.id = shift_id where  shift_id=$1;', [Id]);
+            let result = await pool.query('SELECT id FROM shifts WHERE shift_day=$1', ['Monday']);
+            let Id = result.rows[0].id;
+            let onDuty = await pool.query(' select* from roster join waiters on waiter_id = waiters.id join shifts on shifts.id = shift_id where  shift_id=$1;', [Id]);
+            return onDuty.rows;
         }
         if (Day === 'Tuesday') {
-            result = await pool.query('SELECT id FROM shifts WHERE shift_day=$1', ['Tuesday']);
-            let Id = result.rows;
-            await pool.query(' select* from roster join waiters on waiter_id = waiters.id join shifts on shifts.id = shift_id where  shift_id=$1;', [Id]);
+            let result = await pool.query('SELECT id FROM shifts WHERE shift_day=$1', ['Tuesday']);
+            let Id = result.rows[0].id;
+            let onDuty = await pool.query(' select* from roster join waiters on waiter_id = waiters.id join shifts on shifts.id = shift_id where  shift_id=$1;', [Id]);
+            return onDuty.rows;
         }
         if (Day === 'Wednesday') {
-            result = await pool.query('SELECT id FROM shifts WHERE shift_day=$1', ['Wednesday']);
-            let Id = result.rows;
-            await pool.query(' select* from roster join waiters on waiter_id = waiters.id join shifts on shifts.id = shift_id where  shift_id=$1;', [Id]);
+            let result = await pool.query('SELECT id FROM shifts WHERE shift_day=$1', ['Wednesday']);
+            let Id = result.rows[0].id;
+            let onDuty = await pool.query(' select* from roster join waiters on waiter_id = waiters.id join shifts on shifts.id = shift_id where  shift_id=$1;', [Id]);
+            return onDuty.rows;
         }
         if (Day === 'Thursday') {
-            result = await pool.query('SELECT id FROM shifts WHERE shift_day=$1', ['Thursday']);
-            let Id = result.rows;
-            await pool.query(' select* from roster join waiters on waiter_id = waiters.id join shifts on shifts.id = shift_id where  shift_id=$1;', [Id]);
+            let result = await pool.query('SELECT id FROM shifts WHERE shift_day=$1', ['Thursday']);
+            let Id = result.rows[0].id;
+            let onDuty = await pool.query(' select* from roster join waiters on waiter_id = waiters.id join shifts on shifts.id = shift_id where  shift_id=$1;', [Id]);
+            return onDuty.rows;
         }
         if (Day === 'Friday') {
-            result = await pool.query('SELECT id FROM shifts WHERE shift_day=$1', ['Friday']);
-            let Id = result.rows;
-            await pool.query(' select* from roster join waiters on waiter_id = waiters.id join shifts on shifts.id = shift_id where  shift_id=$1;', [Id]);
+            let result = await pool.query('SELECT id FROM shifts WHERE shift_day=$1', ['Friday']);
+            let Id = result.rows[0].id;
+            let onDuty = await pool.query(' select* from roster join waiters on waiter_id = waiters.id join shifts on shifts.id = shift_id where  shift_id=$1;', [Id]);
+            return onDuty.rows;
         }
         if (Day === 'Saturday') {
-            result = await pool.query('SELECT id FROM shifts WHERE shift_day=$1', ['Saturday']);
-            let Id = result.rows;
-            await pool.query(' select* from roster join waiters on waiter_id = waiters.id join shifts on shifts.id = shift_id where  shift_id=$1;', [Id]);
+            let result = await pool.query('SELECT id FROM shifts WHERE shift_day=$1', ['Saturday']);
+            let Id = result.rows[0].id;
+            let onDuty = await pool.query(' select* from roster join waiters on waiter_id = waiters.id join shifts on shifts.id = shift_id where  shift_id=$1;', [Id]);
+            return onDuty.rows;
         }
         if (Day === 'Sunday') {
-            result = await pool.query('SELECT id FROM shifts WHERE shift_day=$1', ['Sunday']);
-            let Id = result.rows;
-            await pool.query(' select* from roster join waiters on waiter_id = waiters.id join shifts on shifts.id = shift_id where  shift_id=$1;', [Id]);
+            let result = await pool.query('SELECT id FROM shifts WHERE shift_day=$1', ['Sunday']);
+            let Id = result.rows[0].id;
+            let onDuty = await pool.query(' select* from roster join waiters on waiter_id = waiters.id join shifts on shifts.id = shift_id where  shift_id=$1;', [Id]);
+            return onDuty.rows;
         }
     }
-
 
     async function putInRoster (user, workingDay) {
         let waiterId = await pool.query('select id from waiters where username = $1', [user]);
 
         if (typeof workingDay === 'string') {
             let dayId = await pool.query('SELECT id FROM shifts WHERE shift_day=$1', [workingDay]);
-            result = await pool.query('INSERT INTO roster (waiter_id ,shift_id) VALUES ($1, $2)', [waiterId.rows[0].id, dayId.rows[0].id]);
+            await pool.query('INSERT INTO roster (waiter_id ,shift_id) VALUES ($1, $2)', [waiterId.rows[0].id, dayId.rows[0].id]);
         } else {
             for (var j = 0; j < workingDay.length; j++) {
                 let dayId = await pool.query('SELECT id FROM shifts WHERE shift_day=$1', [workingDay[j]]);
-                result = await pool.query('INSERT INTO roster (waiter_id ,shift_id) VALUES ($1, $2)', [waiterId.rows[0].id, dayId.rows[0].id]);
+                await pool.query('INSERT INTO roster (waiter_id ,shift_id) VALUES ($1, $2)', [waiterId.rows[0].id, dayId.rows[0].id]);
             };
         }
     }
@@ -79,8 +90,8 @@ module.exports = function (pool) {
         readWaiter,
         putWaiter,
         readWaiterId,
-        putInRoster
-        // readRoster
+        putInRoster,
+        readRoster
 
     };
 };
