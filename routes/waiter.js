@@ -16,14 +16,14 @@ module.exports = function (pool) {
         try {
             const waiter = req.params.username;
             let user = waiter.toUpperCase();
-            const workingDay = req.body.day;
+            let workingDay = req.body.day;
 
             await getWaiter.putInRoster(user, workingDay);
-            
-            let onDuty = await getWaiter.readRoster(workingDay);
+
+            // let onDuty = await getWaiter.readRoster(workingDay);
             // console.log(onDuty);
-            let duty = await getWaiter.waitersWorking(onDuty);
-            console.log(duty);
+            // let duty = await getWaiter.waitersWorking(onDuty);
+            // console.log(duty);
 
             res.redirect('/waiters/' + user);
         } catch (err) {
@@ -31,14 +31,19 @@ module.exports = function (pool) {
         }
     }
 
-    // async function greeted (req, res) {
-    //     try {
-    //         let names = await getGreet.readData();
-    //         res.render('greeted', { names });
-    //     } catch (err) {
+    async function day (req, res) {
+        try {
+            const workingDay = req.body.myDay;
+            let onDuty = await getWaiter.readRoster(workingDay);
 
-    //     }
-    // }
+            // let names = await getWaiter.waitersWorking(onDuty);
+            // console.log(names);
+            
+            res.render('day', { onDuty });
+        } catch (err) {
+
+        }
+    }
     // async function counter (req, res) {
     //     try {
     //         let username = req.params.username;
@@ -61,6 +66,7 @@ module.exports = function (pool) {
     return {
 
         waiter,
-        secondWaiter
+        secondWaiter,
+        day
     };
 };

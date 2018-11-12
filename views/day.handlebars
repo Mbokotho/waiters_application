@@ -11,7 +11,7 @@
   <span class="label-body">Monday</span>
    <button class="button" type="submit" name="button">VIEW</button>
 </form> --}}
-  <center><form class ="" action="/day" method="get">
+  <center><form class ="" action="/day" method="post">
   <input type="radio" name="myDay" class="with-gap" value="Monday">
   <span class="label-body">MONDAY</span>
 
@@ -35,5 +35,20 @@
   <div class="row  buttons">
   <center><button class="button" type="submit" name="button">VIEW</button></center>
 </form></center>
+
+<div class= "row">
+
+<table>
+    <tr>
+        <th>ON DUTY</th>
+    </tr>
+
+    {{#each onDuty}}
+        <tr>
+        <td>{{username}}</td>
+    </tr>
+    {{/each}}
+</table>
+</div>
 
 

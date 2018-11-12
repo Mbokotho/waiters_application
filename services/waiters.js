@@ -25,54 +25,56 @@ module.exports = function (pool) {
         if (Day === 'Monday') {
             let result = await pool.query('SELECT id FROM shifts WHERE shift_day=$1', ['Monday']);
             let Id = result.rows[0].id;
-            let onDuty = await pool.query(' select* from roster join waiters on waiter_id = waiters.id join shifts on shifts.id = shift_id where  shift_id=$1;', [Id]);
+            let onDuty = await pool.query(' select username from roster join waiters on waiter_id = waiters.id join shifts on shifts.id = shift_id where  shift_id=$1;', [Id]);
             return onDuty.rows;
         }
         if (Day === 'Tuesday') {
             let result = await pool.query('SELECT id FROM shifts WHERE shift_day=$1', ['Tuesday']);
             let Id = result.rows[0].id;
-            let onDuty = await pool.query(' select* from roster join waiters on waiter_id = waiters.id join shifts on shifts.id = shift_id where  shift_id=$1;', [Id]);
+            let onDuty = await pool.query(' select username from roster join waiters on waiter_id = waiters.id join shifts on shifts.id = shift_id where  shift_id=$1;', [Id]);
             return onDuty.rows;
         }
         if (Day === 'Wednesday') {
             let result = await pool.query('SELECT id FROM shifts WHERE shift_day=$1', ['Wednesday']);
             let Id = result.rows[0].id;
-            let onDuty = await pool.query(' select* from roster join waiters on waiter_id = waiters.id join shifts on shifts.id = shift_id where  shift_id=$1;', [Id]);
+            let onDuty = await pool.query(' select username from roster join waiters on waiter_id = waiters.id join shifts on shifts.id = shift_id where  shift_id=$1;', [Id]);
             return onDuty.rows;
         }
         if (Day === 'Thursday') {
             let result = await pool.query('SELECT id FROM shifts WHERE shift_day=$1', ['Thursday']);
             let Id = result.rows[0].id;
-            let onDuty = await pool.query(' select* from roster join waiters on waiter_id = waiters.id join shifts on shifts.id = shift_id where  shift_id=$1;', [Id]);
+            let onDuty = await pool.query(' select username from roster join waiters on waiter_id = waiters.id join shifts on shifts.id = shift_id where  shift_id=$1;', [Id]);
             return onDuty.rows;
         }
         if (Day === 'Friday') {
             let result = await pool.query('SELECT id FROM shifts WHERE shift_day=$1', ['Friday']);
             let Id = result.rows[0].id;
-            let onDuty = await pool.query(' select* from roster join waiters on waiter_id = waiters.id join shifts on shifts.id = shift_id where  shift_id=$1;', [Id]);
+            let onDuty = await pool.query(' select username from roster join waiters on waiter_id = waiters.id join shifts on shifts.id = shift_id where  shift_id=$1;', [Id]);
             return onDuty.rows;
         }
         if (Day === 'Saturday') {
             let result = await pool.query('SELECT id FROM shifts WHERE shift_day=$1', ['Saturday']);
             let Id = result.rows[0].id;
-            let onDuty = await pool.query(' select* from roster join waiters on waiter_id = waiters.id join shifts on shifts.id = shift_id where  shift_id=$1;', [Id]);
+            let onDuty = await pool.query(' select username from roster join waiters on waiter_id = waiters.id join shifts on shifts.id = shift_id where  shift_id=$1;', [Id]);
             return onDuty.rows;
         }
         if (Day === 'Sunday') {
             let result = await pool.query('SELECT id FROM shifts WHERE shift_day=$1', ['Sunday']);
             let Id = result.rows[0].id;
-            let onDuty = await pool.query(' select* from roster join waiters on waiter_id = waiters.id join shifts on shifts.id = shift_id where  shift_id=$1;', [Id]);
+            let onDuty = await pool.query(' select username from roster join waiters on waiter_id = waiters.id join shifts on shifts.id = shift_id where  shift_id=$1;', [Id]);
             return onDuty.rows;
         }
     }
 
-    async function waitersWorking (list) {
-        var Items = [];
-        for (var i = 0; i < list.length; i++) {
-            Items.push(list[i].username);
-        }
-        return Items;
-    }
+    // async function waitersWorking (list) {
+    //     var Items = [];
+    //     for (var i = 0; i < list.length; i++) {
+    //         Items.push(list[i].username);
+    //     }
+    //     console.log('lwando', list);
+    //     return Items;
+    // }
+
 
     async function putInRoster (user, workingDay) {
         let waiterId = await pool.query('select id from waiters where username = $1', [user]);
@@ -99,7 +101,7 @@ module.exports = function (pool) {
         putWaiter,
         readWaiterId,
         putInRoster,
-        readRoster,
-        waitersWorking
+        readRoster
+        // waitersWorking
     };
 };

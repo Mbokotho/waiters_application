@@ -75,15 +75,25 @@ app.get('/waiters/:username', getWaiter.waiter);
 
 app.post('/waiters/:username', getWaiter.secondWaiter);
 
-app.get('/day', async function (req, res) {
-    let name = await pool.query('select * from shifts');
-    let names = name.rows;
-    res.render('day', { names });
+app.get('/roster', async function (req, res) {
+    res.render('day');
 });
 
-app.post('/roster', async function (req, res) {
-    res.redirect('day');
-});
+app.post('/day', getWaiter.day);
+// async function (req, res) {
+//     let name = await pool.query('select * from shifts');
+     
+//             let onDuty = await getWaiter.readRoster(workingDay);
+//             console.log(onDuty);
+//             let duty = await getWaiter.waitersWorking(onDuty);
+//             console.log(duty);
+
+//     let names = name.rows;
+//     res.render('day', { names });
+// }
+
+
+
 let PORT = process.env.PORT || 3030;
 
 app.listen(PORT, function () {
