@@ -16,10 +16,6 @@ module.exports = function (pool) {
         let waiterId = await pool.query('select id from waiters where username = $1', [person]);
         return waiterId.rows[0].id;
     }
-    // async function readDay (Day) {
-    //     let result = await pool.query('SELECT id FROM shifts WHERE shift_day=$1', [Day]);
-    //     return result.rows[0].id;
-    // }
 
     async function readRoster (Day) {
         if (Day === 'Monday') {

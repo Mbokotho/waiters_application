@@ -8,7 +8,7 @@ create table shifts(
 
 create table waiters(
   id serial primary key,
-    username text not null);
+    username text not null UNIQUE );
 
 create table roster(
   id serial primary key,
